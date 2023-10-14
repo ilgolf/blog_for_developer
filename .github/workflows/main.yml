@@ -6,27 +6,25 @@ on:
       - feature/*
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-
-    - name: Build with Gradle and run Jacoco
-      run: ./gradlew clean build jacocoTestReport
-
-    - name: Check coverage
-      run: |
-        if [[ `grep -o '<counter type="LINE" missed="0"' build/reports/jacoco/test/jacocoTestReport.xml` ]]; then
-          echo "Coverage check passed!"
-        else
-          echo "Coverage check failed!" && exit 1
-        fi
+      - uses: actions/checkout@v3
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Grant Execute Permission For Gradlew
+        run: chmod +x gradlew
+      - name: Test With Gradle
+        run: ./gradlew test jacocoTestReport
+      - name: Add coverage to PR
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: server/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 70
+          min-coverage-changed-files: 70
+          update-comment: true
+          title: "Coverage Report"

@@ -21,10 +21,9 @@ jacoco {
 
 tasks.jacocoTestReport {
     reports {
-        xml.apply { isEnabled = true }
-        html.apply { isEnabled = true }
-        html.outputLocation = (file("$buildDir/customPathForHtml"))
-        xml.outputLocation = (file("$buildDir/customPathForXml/jacocoCustomName.xml"))
+        xml.required.set(true)
+        csv.required.set(true)
+        html.required.set(true)
     }
 }
 
@@ -115,7 +114,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
-                minimum = "0.70".toBigDecimal()
+                minimum = "0.80".toBigDecimal()
             }
 
             excludes = listOf(
@@ -130,6 +129,22 @@ tasks.jacocoTestCoverageVerification {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    systemProperty("file.encoding", "UTF-8")
+    finalizedBy("jacocoTestReport")
+}
+
+tasks.withType<JacocoReport> {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.map {
+            fileTree(it).apply {
+                exclude(
+                    "me/golf/blog/global/**",
+                    "me/golf/blog/product/board/persist/Q*",
+                    "me/golf/blog/product/member/persist/Q*"
+                    )
+            }
+        }))
+    }
 }
 
 tasks.test {

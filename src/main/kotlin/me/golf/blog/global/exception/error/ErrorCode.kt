@@ -17,5 +17,10 @@ enum class ErrorCode(val message: String, val status: Int) {
     // Authentication
     REFRESH_TOKEN_INVALID("리프레시 토큰 인증에 실패했습니다.", 401),
     AUTHORIZATION_FAIL("인증에 실패했습니다.", 401),
-    BOARD_ALREADY_EXIST("해당 내용의 게시판이 이미 존재합니다.", 400);
+
+    // BOARD
+    BOARD_ALREADY_EXIST("해당 내용의 게시판이 이미 존재합니다.", 400),
+    BOARD_NOT_FOUND("게시판이 존재하지 않습니다.", 400),
+    BOARD_EXCEED_REACH("게시판 보유 횟수인 4개를 초과했습니다", 400),
+    NON_EXISTENT_MEMBER_BOARD_CREATION_ERROR("존재하지 않는 회원에 대해서 게시판 생성할 수 없습니다.", 400);
 }

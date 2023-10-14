@@ -35,12 +35,7 @@ class MemberRepositoryHandler(
             ?: throw MemberException.MemberNotFoundException(memberId.toString())
     }
 
-    fun validateMemberExist(memberId: Long): Boolean {
-
-        return memberRepository.existsById(memberId)
-    }
-
-    private fun getMember(memberId: Long): Member {
+    fun getMember(memberId: Long): Member {
 
         return memberRepository.findByIdOrNull(memberId)
             ?: throw MemberException.MemberNotFoundException(memberId.toString())

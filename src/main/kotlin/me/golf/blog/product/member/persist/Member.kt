@@ -9,6 +9,10 @@ import org.hibernate.annotations.DynamicUpdate
 @DynamicUpdate
 class Member(
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long = 0L,
+
     @Column(name = "email", unique = true)
     var email: String,
 
@@ -34,22 +38,19 @@ class Member(
     var experience: Int,
 
     @Column(name = "profile_image_url", nullable = true)
-    var profileImageUrl: String
-): BaseTimeEntity() {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0L
+    var profileImageUrl: String,
 
     @Column(name = "activated")
-    var activated: Boolean = true
+    var activated: Boolean = true,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    var role: Role = Role.USER
+    var role: Role = Role.USER,
 
     @Embedded
     var memberMetrics: MemberMetrics = MemberMetrics(0, 0, 0)
+
+) : BaseTimeEntity() {
 
     fun update(requestDto: MemberUpdateRequestDto) {
         this.nickname = requestDto.nickname

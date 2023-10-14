@@ -22,8 +22,8 @@ spring:
       host: blog-redis
   neo4j:
     authentication:
-      username: nokt
-      password: 1234
+      username: neo4k
+      password: nokt12345678
     uri: bolt://blog-neo4j:7687
 
   docker:

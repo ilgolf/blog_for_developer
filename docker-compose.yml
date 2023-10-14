@@ -4,16 +4,20 @@ services:
   blog-redis:
     image: redis:7
     platform: linux/amd64
+    networks:
+      - blog
     container_name: blog-redis
     hostname: blog-redis
     ports:
       - "56379:6379"
     volumes:
-      - /Users/nogyeongtae/Shared/data/golf-redis:/var/lib/redis
+      - /Users/nogyeongtae/data/redis:/var/lib/redis
 
   blog-mysql:
     image: mysql:8.0.22
     platform: linux/amd64
+    networks:
+      - blog
     ports:
       - "43306:3306"
     container_name: blog-mysql
@@ -26,27 +30,31 @@ services:
       MYSQL_PASSWORD: 1234
       TZ: Asia/Seoul
     volumes:
-      - /Users/nogyeongtae/Shared/data/blog-mysql:/var/run/mysql
+      - /Users/nogyeongtae/data/mysql:/var/run/mysql
 
   blog-neo4j:
     image: neo4j:5.12
     platform: linux/amd64
+    networks:
+      - blog
     ports:
       - "7474:7474"
       - "7687:7687"
     volumes:
-      - /data/neo4j:/data
-      - /logs/neo4j:/logs
+      - /Users/nogyeongtae/data/neo4j:/var/run/neo4j
     environment:
-      NEO4J_AUTH: nokt/1234
+      NEO4J_AUTH: neo4j/nokt12345678
 
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - blog
     container_name: blog-app
     ports:
       - "8099:8099"
-    depends_on:
-      - blog-mysql
-      - blog-neo4j
+
+networks:
+  blog:
+    external: true

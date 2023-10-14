@@ -8,9 +8,25 @@ plugins {
     kotlin("plugin.spring") version "1.8.22"
     kotlin("plugin.jpa") version "1.8.22"
     kotlin("kapt") version "1.3.61"
+
+    java
+    jacoco
 }
 
 group = "me.golf"
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.apply { isEnabled = true }
+        html.apply { isEnabled = true }
+        html.outputLocation = (file("$buildDir/customPathForHtml"))
+        xml.outputLocation = (file("$buildDir/customPathForXml/jacocoCustomName.xml"))
+    }
+}
 
 configurations {
     compileOnly {
@@ -79,6 +95,36 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
         jvmTarget = "17"
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+
+            limit {
+                minimum = "0.70".toBigDecimal()
+            }
+        }
+
+        rule {
+            enabled = true
+
+            element = "CLASS"
+
+            limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
+                minimum = "0.70".toBigDecimal()
+            }
+
+            excludes = listOf(
+                "me.golf.blog.global.*",
+                "me.golf.blog.product.board.persist.Q*",
+                "me.golf.blog.product.member.persist.Q*",
+                "me.golf.blog.BlogKotlinApplicationKt"
+            )
+        }
     }
 }
 

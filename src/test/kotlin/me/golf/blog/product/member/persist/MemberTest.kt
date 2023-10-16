@@ -19,6 +19,33 @@ class MemberTest {
     }
 
     @Test
+    fun `회원 생성 시 초기 metrics 정보는 모두 0이다`() {
+        // given
+        val newMember = Member(
+            id = 1L,
+            email = "golf@google.co.kr",
+            password = "12345678",
+            name = "김성희",
+            nickname = "부엉희",
+            description = "3년차 QC입니다.",
+            jobType = JobType.WORKING,
+            company = "CJ 제일제당",
+            experience = 10,
+            profileImageUrl = "https://s3.amazon.image/s3"
+        )
+
+        // when
+        val memberMetrics = newMember.memberMetrics
+
+        // then
+        assertAll(
+            { assertThat(memberMetrics.boardCount).isEqualTo(0) },
+            { assertThat(memberMetrics.followingCount).isEqualTo(0) },
+            { assertThat(memberMetrics.followCount).isEqualTo(0) }
+        )
+    }
+
+    @Test
     fun `회원 정보를 수정한다`() {
         // given
         val requestDto = MemberUpdateRequestDto(

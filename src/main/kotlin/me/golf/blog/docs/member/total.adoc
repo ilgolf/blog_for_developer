@@ -1,0 +1,43 @@
+= Member
+
+email : ilgolc@naver.com
+
+version : 1.0.0
+
+releaseDate : 2022.06.25
+
+|===
+| Method | Content
+
+| `GET`
+| 읽기
+
+| `POST`
+| 추가
+
+| `PUT`
+| 수정
+
+| `PATCH`
+| 상태 변경
+
+
+| `DELETE`
+| 삭제
+|===
+
+== 회원 생성
+
+include::{docdir}/create.adoc[]
+
+== 회원 정보 수정
+
+include::{docdir}/update.adoc[]
+
+== 회원 상세 조회
+
+include::{docdir}/detail.adoc[]
+
+== 회원 탈퇴
+
+include::{docdir}/withdraw.adoc[]

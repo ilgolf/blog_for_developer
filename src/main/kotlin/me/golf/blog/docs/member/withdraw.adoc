@@ -1,0 +1,21 @@
+=======================================================
+
+== Spring REST Docs - Create
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== REQUEST SPEC
+
+include::{snippets}/member/withdraw/curl-request.adoc[]
+
+== REQUEST
+
+include::{snippets}/member/withdraw/http-request.adoc[]
+
+== RESPONSE
+
+include::{snippets}/member/withdraw/http-response.adoc[]
+
+=======================================================

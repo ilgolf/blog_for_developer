@@ -16,4 +16,7 @@ class MemberMetrics(
     var boardCount: Long
 ) {
 
+    fun plusBoardCount() {
+        this.boardCount ++;
+    }
 }

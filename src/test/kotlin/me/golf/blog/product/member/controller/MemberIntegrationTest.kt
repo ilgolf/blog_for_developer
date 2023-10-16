@@ -22,7 +22,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 class MemberIntegrationTest
 
 @Autowired
@@ -51,9 +53,30 @@ constructor(
         token = tokenProvider.createToken(member.id, authToken).accessToken
     }
 
-    @AfterEach
-    fun destroy() {
-        memberRepository.delete(member)
+    @Test
+    fun `저장 요청 시 jobType이 반드시 기존 enum 타입과 일치해야한다`() {
+        val requestDto = MemberSavePostRequestDto(
+            email = "ktn@naver.com",
+            password = GivenMember.PASSWORD,
+            passwordConfirm = GivenMember.PASSWORD,
+            name = GivenMember.NAME,
+            nickname = "newNickname",
+            description = GivenMember.DESCRIPTION,
+            company = GivenMember.COMPANY,
+            profileImageUrl = GivenMember.PROFILE_IMAGE,
+            experience = GivenMember.EXPERIENCE,
+            jobType = "noJobType"
+        )
+
+
+        val body = objectMapper.writeValueAsString(requestDto)
+
+        mockMvc.perform(post("/members")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body)
+        )
+            .andExpect(status().is4xxClientError)
+            .andDo(MockMvcResultHandlers.print())
     }
 
     @Test
@@ -104,7 +127,7 @@ constructor(
         val requestDto = MemberSavePostRequestDto(
             email = "ktn@naver.com",
             password = GivenMember.PASSWORD,
-            passwordConfirm = GivenMember.PASSWORD,
+            passwordConfirm = "3213142",
             name = GivenMember.NAME,
             nickname = "newNickname",
             description = GivenMember.DESCRIPTION,

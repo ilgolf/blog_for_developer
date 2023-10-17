@@ -1,0 +1,36 @@
+= Certification
+
+email : ilgolc@naver.com
+
+version : 1.0.0
+
+releaseDate : 2022.06.25
+
+|===
+| Method | Content
+
+| `GET`
+| 읽기
+
+| `POST`
+| 추가
+
+| `PUT`
+| 수정
+
+| `PATCH`
+| 상태 변경
+
+
+| `DELETE`
+| [.line-through]#삭제#
+|===
+
+== 로그인
+
+include::{docdir}/login.adoc[]
+
+== 토큰 재발행
+
+include::{docdir}/refresh.adoc[]`
+

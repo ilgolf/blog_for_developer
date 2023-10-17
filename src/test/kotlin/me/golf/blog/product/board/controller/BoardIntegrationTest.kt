@@ -72,12 +72,12 @@ constructor(
             .content(body))
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
-            .andDo(document("board/request/create", requestFields(
+            .andDo(document("board/save/request", requestFields(
                 fieldWithPath("title").description("게시판 제목"),
                 fieldWithPath("description").description("자기 소개 글"),
                 fieldWithPath("boardUrl").description("게시판 url")
             )))
-            .andDo(document("board/response/create", simpleBoardResponse))
+            .andDo(document("board/save/response", simpleBoardResponse))
     }
 
     @Test
@@ -131,22 +131,33 @@ constructor(
             .content(body))
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
-            .andDo(document("board/request/update", requestFields(
+            .andDo(document("board/update/request", requestFields(
                 fieldWithPath("title").description("게시판 제목"),
                 fieldWithPath("description").description("자기 소개 글")
             )))
-            .andDo(document("board/response/update", simpleBoardResponse))
+            .andDo(document("board/update/response", simpleBoardResponse))
     }
 
     @Test
     fun `게시판 요약 조회 통합 테스트`() {
+        for (i in 0 .. 5) {
+            val newBoard = Board(
+                title = "title $i",
+                description = "게시판 테스트 $i 번째",
+                boardUrl = "https://s3.amazon.com/image/$i",
+                memberId = member.id
+            )
+
+            boardRepository.save(newBoard)
+        }
+
         mockMvc.perform(get("/boards")
             .header("Authorization", "Bearer $token")
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
-            .andDo(document("board/request/summary"))
-            .andDo(document("board/response/summary", responseFields(
+            .andDo(document("board/summary/request"))
+            .andDo(document("board/summary/response", responseFields(
                 fieldWithPath("[].boardId").description("게시판 식별자"),
                 fieldWithPath("[].title").description("게시판 제목"),
                 fieldWithPath("[].boardUrl").description("게시판 url")
@@ -160,8 +171,8 @@ constructor(
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
-            .andDo(document("board/request/detail"))
-            .andDo(document("board/response/detail", responseFields(
+            .andDo(document("board/detail/request"))
+            .andDo(document("board/detail/response", responseFields(
                 fieldWithPath("boardId").description("게시판 식별자"),
                 fieldWithPath("title").description("게시판 제목"),
                 fieldWithPath("description").description("게시판 소개"),

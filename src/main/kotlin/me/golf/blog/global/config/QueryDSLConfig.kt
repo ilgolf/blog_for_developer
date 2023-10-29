@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class QueryDSLConfig(
     @PersistenceContext
-    val entityManager: EntityManager
+    private val entityManager: EntityManager
 ) {
 
     @Bean

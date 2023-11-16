@@ -52,6 +52,9 @@ services:
     networks:
       - blog
     container_name: blog-app
+    depends_on:
+      - blog-mysql
+      - blog-neo4j
     ports:
       - "8099:8099"
 

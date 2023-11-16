@@ -70,7 +70,7 @@ class SecurityConfig(
 
             .authorizeHttpRequests {
                 it.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                it.requestMatchers(*excludePaths)
+                it.requestMatchers(*excludePaths).permitAll()
                 it.requestMatchers(HttpMethod.POST, "/members").permitAll()
                 it.requestMatchers(HttpMethod.POST, "/auths/refresh").permitAll()
                 it.requestMatchers(HttpMethod.POST, "/auths").permitAll()

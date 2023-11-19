@@ -46,7 +46,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.save(any()) } returns board
 
         // when
-        boardRepositoryHandler.beforeSaveProcess(board)
+        boardRepositoryHandler.save(board)
 
         // then
         verify(exactly = 1) { boardRepository.save(any()) }
@@ -60,7 +60,7 @@ class BoardRepositoryHandlerTest {
         every { memberRepositoryHandler.getMember(any()) } returns member
 
         // when
-        val exception = catchException { boardRepositoryHandler.beforeSaveProcess(board) }
+        val exception = catchException { boardRepositoryHandler.save(board) }
 
         // then
         verify(exactly = 0) { boardRepository.save(any()) }
@@ -76,7 +76,7 @@ class BoardRepositoryHandlerTest {
         every { memberRepositoryHandler.getMember(any()) } throws MemberException.MemberNotFoundException("1")
 
         // when
-        val exception = catchException { boardRepositoryHandler.beforeSaveProcess(board) }
+        val exception = catchException { boardRepositoryHandler.save(board) }
 
         // then
         verify(exactly = 0) { boardRepository.save(any()) }
@@ -95,7 +95,7 @@ class BoardRepositoryHandlerTest {
         every { memberRepositoryHandler.getMember(any()) } returns member
 
         // when
-        val exception = catchException { boardRepositoryHandler.beforeSaveProcess(board) }
+        val exception = catchException { boardRepositoryHandler.save(board) }
 
         // then
         verify(exactly = 0) { boardRepository.save(any()) }
@@ -110,6 +110,7 @@ class BoardRepositoryHandlerTest {
         // given
         val requestDto = BoardUpdateHandlerRequestDto(
             title  = "new Title",
+            description = "description new",
             boardId = 1L,
             memberId = 1L
         )
@@ -118,7 +119,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByIdAndMemberId(any(), any()) } returns board
 
         // when
-        boardRepositoryHandler.beforeUpdateProcess(requestDto)
+        boardRepositoryHandler.update(requestDto)
 
         // then
         verify(exactly = 1) { boardRepository.findByIdAndMemberId(any(), any()) }
@@ -129,6 +130,7 @@ class BoardRepositoryHandlerTest {
         // given
         val requestDto = BoardUpdateHandlerRequestDto(
             title  = "new Title",
+            description = "new description",
             boardId = 1L,
             memberId = 1L
         )
@@ -137,7 +139,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByIdAndMemberId(any(), any()) } returns board
 
         // when
-        val exception = catchException { boardRepositoryHandler.beforeUpdateProcess(requestDto) }
+        val exception = catchException { boardRepositoryHandler.update(requestDto) }
 
         // then
         verify(exactly = 0) { boardRepository.findByIdAndMemberId(any(), any()) }
@@ -152,6 +154,7 @@ class BoardRepositoryHandlerTest {
         // given
         val requestDto = BoardUpdateHandlerRequestDto(
             title  = "new Title",
+            description = "new description",
             boardId = 1L,
             memberId = 1L
         )
@@ -160,7 +163,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByIdAndMemberId(any(), any()) } returns board
 
         // when
-        boardRepositoryHandler.beforeUpdateProcess(requestDto)
+        boardRepositoryHandler.update(requestDto)
 
         // then
         verify(exactly = 1) { boardRepository.findByIdAndMemberId(any(), any()) }
@@ -186,7 +189,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByMemberIdOrderByIdDesc(any()) } returns boards
 
         // when
-        boardRepositoryHandler.beforeGetSummaryProcess(1L)
+        boardRepositoryHandler.getBoards(1L)
 
         // then
         verify(exactly = 1) { boardRepository.findByMemberIdOrderByIdDesc(any()) }
@@ -198,7 +201,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByIdAndMemberId(any(), any()) } returns board
 
         // when
-        boardRepositoryHandler.beforeGetDetailProcess(1L, 1L)
+        boardRepositoryHandler.getBoard(1L, 1L)
 
         // then
         verify { boardRepository.findByIdAndMemberId(any(), any()) }
@@ -210,7 +213,7 @@ class BoardRepositoryHandlerTest {
         every { boardRepository.findByIdAndMemberId(any(), any()) } returns null
 
         // when
-        val exception = catchException { boardRepositoryHandler.beforeGetDetailProcess(1L, 1L) }
+        val exception = catchException { boardRepositoryHandler.getBoard(1L, 1L) }
 
         // then
         assertAll(

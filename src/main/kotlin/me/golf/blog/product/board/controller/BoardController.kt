@@ -6,6 +6,7 @@ import me.golf.blog.product.board.application.BoardService
 import me.golf.blog.product.board.dto.*
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -54,5 +55,15 @@ class BoardController(
     ): ResponseEntity<BoardDetailGetResponseDto> {
 
         return ResponseEntity.ok(boardService.getDetail(userDetails.memberId, boardId))
+    }
+
+    @DeleteMapping("/{boardId}")
+    fun delete(
+        @PathVariable boardId: Long,
+        @AuthenticationPrincipal userDetails: CustomUserDetails
+    ): ResponseEntity<Unit> {
+
+        boardService.delete(boardId, userDetails.memberId)
+        return ResponseEntity.noContent().build()
     }
 }

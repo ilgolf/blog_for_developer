@@ -1,6 +1,7 @@
 package me.golf.blog.product.member.handler
 
 import me.golf.blog.product.member.dto.MemberDetailResponseDto
+import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.exception.MemberException
 import me.golf.blog.product.member.persist.Member
 import me.golf.blog.product.member.persist.repository.MemberRepository
@@ -12,27 +13,31 @@ class MemberRepositoryHandler(
     private val memberRepository: MemberRepository
 ) {
 
-    fun saveProcess(memberEntity: Member): Member {
+    fun save(memberEntity: Member): Member {
 
         validationExistBeforeSave(memberEntity.nickname, memberEntity.email)
         return memberRepository.save(memberEntity)
     }
 
-    fun beforeUpdateProcess(memberId: Long, nickname: String): Member {
+    fun update(requestDto: MemberUpdateHandlerRequestDto): Member {
 
-        validationExistBeforeUpdate(memberId, nickname)
-        return getMember(memberId)
+        validationExistBeforeUpdate(requestDto.memberId, requestDto.nickname)
+        return getMember(requestDto.memberId)
+            .also { it.update(requestDto) }
     }
 
-    fun beforeWithdrawProcess(memberId: Long): Member {
-
-        return getMember(memberId)
-    }
-
-    fun getOneProcess(memberId: Long): MemberDetailResponseDto {
+    fun getDetail(memberId: Long): MemberDetailResponseDto {
 
         return memberRepository.getDetailInfo(memberId)
             ?: throw MemberException.MemberNotFoundException(memberId.toString())
+    }
+
+    fun withDraw(memberId: Long) {
+
+        val member = (memberRepository.findByIdOrNull(memberId)
+            ?: throw MemberException.MemberNotFoundException(memberId.toString()))
+
+        member.withdraw()
     }
 
     fun getMember(memberId: Long): Member {

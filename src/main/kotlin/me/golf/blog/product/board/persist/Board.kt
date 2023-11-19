@@ -37,4 +37,8 @@ class Board(
         this.title = title
         this.description = description
     }
+
+    fun delete() {
+        this.deleted = true
+    }
 }

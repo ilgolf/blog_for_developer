@@ -35,13 +35,13 @@ class BoardServiceTest {
             memberId = 1L
         )
 
-        every { boardRepositoryHandler.beforeSaveProcess(any()) } returns board
+        every { boardRepositoryHandler.save(any()) } returns board
 
         // when
         boardService.save(requestDto)
 
         // then
-        verify(exactly = 1) { boardRepositoryHandler.beforeSaveProcess(any()) }
+        verify(exactly = 1) { boardRepositoryHandler.save(any()) }
     }
 
     @Test
@@ -54,13 +54,13 @@ class BoardServiceTest {
             memberId = 1L
         )
 
-        every { boardRepositoryHandler.beforeUpdateProcess(any()) } returns board
+        every { boardRepositoryHandler.update(any()) } returns board
 
         // when
         boardService.update(requestDto)
 
         // then
-        verify(exactly = 1) { boardRepositoryHandler.beforeUpdateProcess(any()) }
+        verify(exactly = 1) { boardRepositoryHandler.update(any()) }
     }
 
     @Test
@@ -79,25 +79,25 @@ class BoardServiceTest {
             )
         }
 
-        every { boardRepositoryHandler.beforeGetSummaryProcess(any()) } returns boards
+        every { boardRepositoryHandler.getBoards(any()) } returns boards
 
         // when
         val responseDtos = boardService.getSummary(memberId = 1L)
 
         // then
-        verify(exactly = 1) { boardRepositoryHandler.beforeGetSummaryProcess(any()) }
+        verify(exactly = 1) { boardRepositoryHandler.getBoards(any()) }
         assertThat(responseDtos.size).isEqualTo(3)
     }
 
     @Test
     fun `게시판 상세 정보를 조회한다`() {
         // given
-        every { boardRepositoryHandler.beforeGetDetailProcess(any(), any()) } returns board
+        every { boardRepositoryHandler.getBoard(any(), any()) } returns board
 
         // when
         boardService.getDetail(1L, 1L)
 
         // then
-        verify { boardRepositoryHandler.beforeGetDetailProcess(any(), any()) }
+        verify { boardRepositoryHandler.getBoard(any(), any()) }
     }
 }

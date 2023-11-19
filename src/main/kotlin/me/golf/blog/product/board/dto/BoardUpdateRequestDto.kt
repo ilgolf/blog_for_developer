@@ -9,6 +9,7 @@ data class BoardUpdateRequestDto(
     fun toHandlerDto(): BoardUpdateHandlerRequestDto {
         return BoardUpdateHandlerRequestDto(
             title = this.title,
+            description = this.description,
             boardId = this.boardId,
             memberId = this.memberId
         )

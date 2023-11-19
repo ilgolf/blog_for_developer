@@ -1,6 +1,7 @@
 package me.golf.blog.product.member.application
 
 import io.mockk.every
+import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import me.golf.blog.product.member.dto.MemberDetailResponseDto
@@ -45,14 +46,14 @@ class MemberServiceTest {
         member.id = 1L
 
         every { passwordEncoder.encode(any()) } returns "#$#abs"
-        every { memberRepositoryHandler.saveProcess(any()) } returns member
+        every { memberRepositoryHandler.save(any()) } returns member
 
         // when
         val responseDto = memberService.save(requestDto)
 
         // then
         assertThat(member.id).isEqualTo(responseDto.memberId)
-        verify { memberRepositoryHandler.saveProcess(any()) }
+        verify { memberRepositoryHandler.save(any()) }
     }
 
     @Test
@@ -71,14 +72,14 @@ class MemberServiceTest {
 
         member.id = 1L
 
-        every { memberRepositoryHandler.beforeUpdateProcess(any(), any()) } returns member
+        every { memberRepositoryHandler.update(any()) } returns member
 
         // when
         val responseDto = memberService.update(requestDto)
 
         // then
         assertThat(responseDto.memberId).isEqualTo(member.id)
-        verify { memberRepositoryHandler.beforeUpdateProcess(any(), any()) }
+        verify { memberRepositoryHandler.update(any()) }
     }
 
     @Test
@@ -86,13 +87,13 @@ class MemberServiceTest {
         // given
         val memberId = 1L
 
-        every { memberRepositoryHandler.beforeWithdrawProcess(any()) } returns member
+        justRun { memberRepositoryHandler.withDraw(any()) }
 
         // when
         memberService.withdraw(memberId)
 
         // then
-        verify { memberRepositoryHandler.beforeWithdrawProcess(any()) }
+        verify { memberRepositoryHandler.withDraw(any()) }
     }
 
     @Test
@@ -114,13 +115,13 @@ class MemberServiceTest {
             boardCount = 0
         )
 
-        every { memberRepositoryHandler.getOneProcess(any()) } returns responseDto
+        every { memberRepositoryHandler.getDetail(any()) } returns responseDto
 
         // when
         val result = memberService.getDetail(memberId)
 
         // then
         assertThat(result.email).isEqualTo(responseDto.email)
-        verify { memberRepositoryHandler.getOneProcess(any()) }
+        verify { memberRepositoryHandler.getDetail(any()) }
     }
 }

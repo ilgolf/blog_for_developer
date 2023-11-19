@@ -2,6 +2,7 @@ package me.golf.blog.product.member.persist
 
 import jakarta.persistence.*
 import me.golf.blog.global.common.BaseTimeEntity
+import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.dto.MemberUpdateRequestDto
 import org.hibernate.annotations.DynamicUpdate
 
@@ -52,7 +53,7 @@ class Member(
 
 ) : BaseTimeEntity() {
 
-    fun update(requestDto: MemberUpdateRequestDto) {
+    fun update(requestDto: MemberUpdateHandlerRequestDto) {
         this.nickname = requestDto.nickname
         this.name = requestDto.name
         this.description = requestDto.description

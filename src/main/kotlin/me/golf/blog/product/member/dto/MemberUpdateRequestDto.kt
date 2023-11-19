@@ -11,4 +11,18 @@ data class MemberUpdateRequestDto(
     val profileImageUrl: String,
     val experience: Int,
     val memberId: Long
-)
+) {
+
+    fun toHandlerDto(): MemberUpdateHandlerRequestDto {
+        return MemberUpdateHandlerRequestDto(
+            nickname = this.nickname,
+            name = this.name,
+            description = this.description,
+            jobType = this.jobType,
+            company = this.company,
+            profileImageUrl = this.profileImageUrl,
+            experience = this.experience,
+            memberId = this.memberId
+        )
+    }
+}

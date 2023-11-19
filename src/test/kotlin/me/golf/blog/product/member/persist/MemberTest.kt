@@ -1,5 +1,6 @@
 package me.golf.blog.product.member.persist
 
+import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.dto.MemberUpdateRequestDto
 import me.golf.blog.product.member.util.GivenMember
 import org.assertj.core.api.Assertions
@@ -48,7 +49,7 @@ class MemberTest {
     @Test
     fun `회원 정보를 수정한다`() {
         // given
-        val requestDto = MemberUpdateRequestDto(
+        val requestDto = MemberUpdateHandlerRequestDto(
             nickname = "야옹이",
             name = "김경태",
             description = "안녕 나 신입 개발자야",

@@ -4,18 +4,18 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import me.golf.blog.product.member.dto.MemberDetailResponseDto
+import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.exception.MemberException
+import me.golf.blog.product.member.persist.JobType
 import me.golf.blog.product.member.persist.Member
 import me.golf.blog.product.member.persist.repository.MemberRepository
 import me.golf.blog.product.member.util.GivenMember
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 import org.springframework.data.repository.findByIdOrNull
-import java.time.LocalDate
 
 class MemberRepositoryHandlerTest {
 
@@ -40,7 +40,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.existsByNickname(any()) } returns false
 
         // when
-        memberRepositoryHandler.saveProcess(member)
+        memberRepositoryHandler.save(member)
 
         // then
         verify { memberRepository.existsByEmail(any()) }
@@ -56,7 +56,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.existsByNickname(any()) } returns false
 
         // when
-        val exception = catchException { memberRepositoryHandler.saveProcess(member) }
+        val exception = catchException { memberRepositoryHandler.save(member) }
 
         // then
         assertAll(
@@ -70,11 +70,22 @@ class MemberRepositoryHandlerTest {
         // given
         member.id = 3L
 
+        val requestDto = MemberUpdateHandlerRequestDto(
+            nickname = "newNickname",
+            name = "노경태",
+            description = "안녕하세요 2년차 서버 엔지니어입니다.",
+            jobType = JobType.WORKING,
+            company = "Sir.Loin",
+            profileImageUrl = "mockPath",
+            experience = 3,
+            memberId = 3L,
+        )
+
         every { memberRepository.existsByIdNotAndNickname(any(), any()) } returns false
         every { memberRepository.findByIdOrNull(any()) } returns member
 
         // when
-        memberRepositoryHandler.beforeUpdateProcess(memberId = member.id, "newNickname")
+        memberRepositoryHandler.update(requestDto)
 
         // then
         verify { memberRepository.existsByIdNotAndNickname(any(), any()) }
@@ -86,12 +97,22 @@ class MemberRepositoryHandlerTest {
         // given
         member.id = 3L
 
+        val requestDto = MemberUpdateHandlerRequestDto(
+            nickname = "newNickname",
+            name = "노경태",
+            description = "안녕하세요 2년차 서버 엔지니어입니다.",
+            jobType = JobType.WORKING,
+            company = "Sir.Loin",
+            profileImageUrl = "mockPath",
+            experience = 3,
+            memberId = 3L,
+        )
+
         every { memberRepository.existsByIdNotAndNickname(any(), any()) } returns false
         every { memberRepository.findByIdOrNull(any()) } returns null
 
         // when
-        val exception =
-            catchException { memberRepositoryHandler.beforeUpdateProcess(memberId = member.id, "newNickname") }
+        val exception = catchException { memberRepositoryHandler.update(requestDto) }
 
         // then
         assertAll(
@@ -106,12 +127,22 @@ class MemberRepositoryHandlerTest {
         member.id = 3L
         val newNickname = "newNickname"
 
+        val requestDto = MemberUpdateHandlerRequestDto(
+            nickname = "newNickname",
+            name = "노경태",
+            description = "안녕하세요 2년차 서버 엔지니어입니다.",
+            jobType = JobType.WORKING,
+            company = "Sir.Loin",
+            profileImageUrl = "mockPath",
+            experience = 3,
+            memberId = 3L,
+        )
+
         every { memberRepository.existsByIdNotAndNickname(any(), any()) } returns true
         every { memberRepository.findByIdOrNull(any()) } returns member
 
         // when
-        val exception =
-            catchException { memberRepositoryHandler.beforeUpdateProcess(memberId = member.id, newNickname) }
+        val exception = catchException { memberRepositoryHandler.update(requestDto) }
 
         // then
         assertAll(
@@ -128,7 +159,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.findByIdOrNull(any()) } returns member
 
         // when
-        memberRepositoryHandler.beforeWithdrawProcess(member.id)
+        memberRepositoryHandler.withDraw(member.id)
 
         // then
         verify { memberRepository.findByIdOrNull(any()) }
@@ -142,7 +173,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.findByIdOrNull(any()) } returns null
 
         // when
-        val exception = catchException { memberRepositoryHandler.beforeWithdrawProcess(member.id) }
+        val exception = catchException { memberRepositoryHandler.withDraw(member.id) }
 
         // then
         assertAll(
@@ -171,7 +202,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.getDetailInfo(any()) } returns responseDto
 
         // when
-        memberRepositoryHandler.getOneProcess(member.id)
+        memberRepositoryHandler.getDetail(member.id)
 
         // then
         verify { memberRepository.getDetailInfo(any()) }
@@ -183,7 +214,7 @@ class MemberRepositoryHandlerTest {
         every { memberRepository.getDetailInfo(any()) } returns null
 
         // when
-        val exception = catchException { memberRepositoryHandler.getOneProcess(member.id) }
+        val exception = catchException { memberRepositoryHandler.getDetail(member.id) }
 
         // then
         assertAll(

@@ -22,5 +22,9 @@ enum class ErrorCode(val message: String, val status: Int) {
     BOARD_ALREADY_EXIST("해당 내용의 게시판이 이미 존재합니다.", 400),
     BOARD_NOT_FOUND("게시판이 존재하지 않습니다.", 400),
     BOARD_EXCEED_REACH("게시판 보유 횟수인 4개를 초과했습니다", 400),
-    NON_EXISTENT_MEMBER_BOARD_CREATION_ERROR("존재하지 않는 회원에 대해서 게시판 생성할 수 없습니다.", 400);
+    NON_EXISTENT_MEMBER_BOARD_CREATION_ERROR("존재하지 않는 회원에 대해서 게시판 생성할 수 없습니다.", 400),
+
+    // POST
+    POST_TITLE_ALREADY_EXIST("해당 제목의 게시글이 이미 존재합니다.", 400),
+    POST_NOT_FOUND("해당 게시글을 찾을 수 없습니다.", 400),
 }

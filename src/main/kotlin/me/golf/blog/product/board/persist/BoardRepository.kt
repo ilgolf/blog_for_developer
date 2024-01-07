@@ -9,6 +9,7 @@ interface BoardRepository: JpaRepository<Board, Long> {
     fun existsByBoardUrl(boardUrl: String): Boolean
 
     fun existsByTitle(title: String): Boolean
+    fun existsByIdAndMemberId(boardId: Long, memberId: Long): Boolean
     fun countByMemberId(memberId: Long): Long
     fun findByMemberIdOrderByIdDesc(memberId: Long): List<Board>
 }

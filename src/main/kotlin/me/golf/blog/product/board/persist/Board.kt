@@ -2,10 +2,10 @@ package me.golf.blog.product.board.persist
 
 import jakarta.persistence.*
 import me.golf.blog.global.common.BaseEntity
-import org.hibernate.annotations.Where
+import org.hibernate.annotations.Filter
 
 @Entity
-@Where(clause = "deleted = false")
+@Filter(name = "deletedFilter", condition = "deleted = false")
 class Board(
 
     @Id

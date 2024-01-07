@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
+@Suppress("NonAsciiCharacters")
 class BoardIntegrationTest
 
 @Autowired

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.2"
+    id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.2"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
     kotlin("jvm") version "1.8.22"
@@ -60,6 +60,9 @@ dependencies {
     kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
     kapt("jakarta.annotation:jakarta.annotation-api")
     kapt("jakarta.persistence:jakarta.persistence-api")
+
+    // jdbc
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
     // neo4j
     implementation("org.neo4j.driver:neo4j-java-driver")
@@ -121,6 +124,8 @@ tasks.jacocoTestCoverageVerification {
                 "me.golf.blog.global.*",
                 "me.golf.blog.product.board.persist.Q*",
                 "me.golf.blog.product.member.persist.Q*",
+                "me.golf.blog.product.post.persist.Q*",
+                "me.golf.blog.product.category.persist.Q*",
                 "me.golf.blog.BlogKotlinApplicationKt"
             )
         }

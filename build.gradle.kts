@@ -126,7 +126,7 @@ tasks.jacocoTestCoverageVerification {
                 "me.golf.blog.product.member.persist.Q*",
                 "me.golf.blog.product.post.persist.Q*",
                 "me.golf.blog.product.category.persist.Q*",
-                "me.golf.blog.BlogKotlinApplicationKt"
+                "me.golf.blog.BlogKotlinApplication*"
             )
         }
     }

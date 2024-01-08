@@ -5,13 +5,16 @@ import me.golf.blog.global.common.BaseTimeEntity
 import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.dto.MemberUpdateRequestDto
 import org.hibernate.annotations.DynamicUpdate
+import org.hibernate.annotations.Filter
 
 @Entity
 @DynamicUpdate
+@Filter(name = "activatedFilter", condition = "activated = true")
 class Member(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     var id: Long = 0L,
 
     @Column(name = "email", unique = true)

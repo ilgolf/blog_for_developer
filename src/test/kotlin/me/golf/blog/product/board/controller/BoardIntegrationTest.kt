@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional
+@Suppress("NonAsciiCharacters")
 class BoardIntegrationTest
 
 @Autowired
@@ -178,5 +179,20 @@ constructor(
                 fieldWithPath("description").description("게시판 소개"),
                 fieldWithPath("boardUrl").description("게시판 url")
             )))
+    }
+
+    @Test
+    fun `게시판을 삭제한다`() {
+        // given
+
+        // when
+        mockMvc.perform(delete("/boards/${board.id}")
+            .header("Authorization", "Bearer $token"))
+            .andExpect(status().isNoContent)
+            .andDo(MockMvcResultHandlers.print())
+            .andDo(document("board/delete/request"))
+
+        // then
+
     }
 }

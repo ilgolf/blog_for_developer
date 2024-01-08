@@ -1,12 +1,10 @@
 package me.golf.blog.product.auth.controller
 
 import jakarta.validation.Valid
-import me.golf.blog.global.common.RedisPolicy
 import me.golf.blog.product.auth.application.AuthService
 import me.golf.blog.product.auth.dto.AccessTokenGetResponseDto
 import me.golf.blog.product.auth.dto.AuthenticationPostRequestDto
 import me.golf.blog.product.auth.dto.RefreshPostRequestDto
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

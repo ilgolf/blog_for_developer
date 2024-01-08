@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 data class PageCustomResponse<T>(
     val data: MutableList<T> = ArrayList(),
     val totalPage: Int = 0,

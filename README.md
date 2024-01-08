@@ -67,3 +67,8 @@ ex) feature/#001/지인추천모델개발
 1. feature: 새로운 기능의 추가
 2. hotFix: 버그수정
 3. docs: 문서 수정
+
+## 중간 중간 이슈 트래킹 또는 주요 변경 사항 의사결정 과정 
+
+### QueryDSL to JDSL migration
+https://github.com/ilgolf/blog_for_developer/issues/14

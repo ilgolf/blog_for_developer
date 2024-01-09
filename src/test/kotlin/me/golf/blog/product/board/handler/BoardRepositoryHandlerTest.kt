@@ -221,4 +221,16 @@ class BoardRepositoryHandlerTest {
             { assertThat(exception.message).isEqualTo("게시판이 존재하지 않습니다.: 1") }
         )
     }
+
+    @Test
+    fun `게시판을 삭제한다`() {
+        // given
+        every { boardRepository.findByIdAndMemberId(any(), any()) } returns board
+
+        // when
+        boardRepositoryHandler.delete(1L, 1L)
+
+        // then
+        verify(exactly = 1) { boardRepository.findByIdAndMemberId(any(), any()) }
+    }
 }

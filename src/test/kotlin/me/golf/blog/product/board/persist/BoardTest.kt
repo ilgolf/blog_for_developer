@@ -53,4 +53,15 @@ class BoardTest {
             { assertThat(board.description).isEqualTo(updateDescription) },
         )
     }
+
+    @Test
+    fun `게시판을 삭제한다`() {
+        // given
+
+        // when
+        board.delete()
+
+        // then
+        assertThat(board.deleted).isTrue
+    }
 }

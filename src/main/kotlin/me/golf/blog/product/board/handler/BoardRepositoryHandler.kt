@@ -54,6 +54,11 @@ class BoardRepositoryHandler(
         getBoard(memberId, boardId).delete()
     }
 
+    fun validationExistBoardByIdAndMemberId(boardId: Long, memberId: Long): Boolean {
+
+        return boardRepository.existsByIdAndMemberId(boardId, memberId)
+    }
+
     private fun validationExistBeforeSave(postUrl: String, title: String) {
 
         validateIfExists(boardRepository.existsByBoardUrl(postUrl), postUrl)

@@ -8,6 +8,7 @@ import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.exception.MemberException
 import me.golf.blog.product.member.persist.JobType
 import me.golf.blog.product.member.persist.Member
+import me.golf.blog.product.member.persist.repository.MemberCustomRepository
 import me.golf.blog.product.member.persist.repository.MemberRepository
 import me.golf.blog.product.member.util.GivenMember
 import org.assertj.core.api.Assertions.*
@@ -20,13 +21,14 @@ import org.springframework.data.repository.findByIdOrNull
 class MemberRepositoryHandlerTest {
 
     private val memberRepository = mockk<MemberRepository>()
+    private val memberCustomRepository = mockk<MemberCustomRepository>()
     private lateinit var memberRepositoryHandler: MemberRepositoryHandler
 
     private lateinit var member: Member
 
     @BeforeEach
     fun setUp() {
-        memberRepositoryHandler = MemberRepositoryHandler(memberRepository)
+        memberRepositoryHandler = MemberRepositoryHandler(memberRepository, memberCustomRepository)
         member = GivenMember.toMember()
     }
 
@@ -199,19 +201,19 @@ class MemberRepositoryHandlerTest {
             boardCount = 0
         )
 
-        every { memberRepository.getDetailInfo(any()) } returns responseDto
+        every { memberCustomRepository.findDetailById(any()) } returns responseDto
 
         // when
         memberRepositoryHandler.getDetail(member.id)
 
         // then
-        verify { memberRepository.getDetailInfo(any()) }
+        verify { memberCustomRepository.findDetailById(any()) }
     }
 
     @Test
     fun `회원 정보를 못가져오면 회원을 찾지 못하였습니다 예외 발생`() {
         // given
-        every { memberRepository.getDetailInfo(any()) } returns null
+        every { memberCustomRepository.findDetailById(any()) } returns null
 
         // when
         val exception = catchException { memberRepositoryHandler.getDetail(member.id) }

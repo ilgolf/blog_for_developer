@@ -180,14 +180,14 @@ class PostRepositoryHandlerTest {
             title = "title",
             content = "content",
             categoryName = "categoryName",
-            createdDate = LocalDateTime.now().toString(),
-            lastModifiedDate = LocalDateTime.now().toString(),
+            createdDate = LocalDateTime.now(),
+            lastModifiedDate = LocalDateTime.now(),
             categoryId = 1L,
             memberId = 1L,
             viewCount = 1L,
             likeCount = 1L,
             replyCount = 1L,
-            postSaveStatus = PostSaveStatus.PUBLISH.name
+            postSaveStatus = PostSaveStatus.PUBLISH
         )
 
         every { postRepository.findAllBy(any()) } returns PageImpl(listOf(responseDto))

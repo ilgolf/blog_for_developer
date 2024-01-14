@@ -52,14 +52,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
+    // jdsl
+    implementation("com.linecorp.kotlin-jdsl:jpql-dsl:3.2.0")
+    implementation("com.linecorp.kotlin-jdsl:jpql-render:3.2.0")
+
     // docker
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-
-    // queryDSL
-    api("com.querydsl:querydsl-jpa:5.0.0:jakarta")
-    kapt("com.querydsl:querydsl-apt:5.0.0:jakarta")
-    kapt("jakarta.annotation:jakarta.annotation-api")
-    kapt("jakarta.persistence:jakarta.persistence-api")
 
     // jdbc
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
@@ -144,8 +142,6 @@ tasks.withType<JacocoReport> {
             fileTree(it).apply {
                 exclude(
                     "me/golf/blog/global/**",
-                    "me/golf/blog/product/board/persist/Q*",
-                    "me/golf/blog/product/member/persist/Q*"
                     )
             }
         }))

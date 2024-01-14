@@ -4,13 +4,15 @@ import me.golf.blog.product.member.dto.MemberDetailResponseDto
 import me.golf.blog.product.member.dto.MemberUpdateHandlerRequestDto
 import me.golf.blog.product.member.exception.MemberException
 import me.golf.blog.product.member.persist.Member
+import me.golf.blog.product.member.persist.repository.MemberCustomRepository
 import me.golf.blog.product.member.persist.repository.MemberRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 
 @Component
 class MemberRepositoryHandler(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
+    private val memberCustomRepository: MemberCustomRepository
 ) {
 
     fun save(memberEntity: Member): Member {
@@ -28,7 +30,7 @@ class MemberRepositoryHandler(
 
     fun getDetail(memberId: Long): MemberDetailResponseDto {
 
-        return memberRepository.getDetailInfo(memberId)
+        return memberCustomRepository.findDetailById(memberId)
             ?: throw MemberException.MemberNotFoundException(memberId.toString())
     }
 

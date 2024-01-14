@@ -158,12 +158,12 @@ class PostServiceTest {
             title = "test title",
             content = "test content",
             categoryName = "test category",
-            createdDate = LocalDateTime.now().toString(),
-            lastModifiedDate = LocalDateTime.now().toString(),
+            createdDate = LocalDateTime.now(),
+            lastModifiedDate = LocalDateTime.now(),
             likeCount = 1,
             replyCount = 1,
             viewCount = 1,
-            postSaveStatus = PostSaveStatus.PUBLISH.name,
+            postSaveStatus = PostSaveStatus.PUBLISH,
         )
 
         val pageResponse = PageImpl(listOf(postSummary))

@@ -1,12 +1,8 @@
 package me.golf.blog.product.post.dto
 
-import com.querydsl.core.annotations.QueryProjection
 import java.time.LocalDateTime
 
-data class PostDetailResponseDto
-
-@QueryProjection
-constructor(
+data class PostDetailResponseDto(
     val postId: Long,
     val boardId: Long,
     val memberId: Long,

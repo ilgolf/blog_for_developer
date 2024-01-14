@@ -1,6 +1,5 @@
 package me.golf.blog.global.security
 
-import com.querydsl.core.annotations.QueryProjection
 import me.golf.blog.product.member.persist.Member
 import me.golf.blog.product.member.persist.Role
 import org.springframework.security.core.GrantedAuthority
@@ -8,10 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.Collections
 
-class CustomUserDetails
-
-@QueryProjection
-constructor(
+class CustomUserDetails(
     var memberId: Long,
     var email: String,
     var roleType: Role

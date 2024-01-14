@@ -5,7 +5,7 @@ import me.golf.blog.product.member.dto.MemberDetailResponseDto
 
 interface MemberCustomRepository {
 
-    fun getAuthInfoById(memberId: Long): CustomUserDetails?
-    fun getAuthInfoByEmail(email: String): CustomUserDetails?
-    fun getDetailInfo(memberId: Long): MemberDetailResponseDto?
+    fun findAuthInfoById(id: Long): CustomUserDetails?
+    fun findAuthInfoByEmail(email: String): CustomUserDetails?
+    fun findDetailById(id: Long): MemberDetailResponseDto?
 }

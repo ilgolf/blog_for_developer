@@ -1,13 +1,8 @@
 package me.golf.blog.product.member.dto
 
-import com.querydsl.core.annotations.QueryProjection
 import me.golf.blog.product.member.persist.JobType
-import java.time.LocalDate
 
-data class MemberDetailResponseDto
-
-@QueryProjection
-constructor(
+data class MemberDetailResponseDto(
     val memberId: Long,
     val email: String,
     val nickname: String,
